@@ -7,7 +7,6 @@ const PersonalInfo = () => {
 
   const [photo, setPhoto] = useState(null);
   const [formData, setFormData] = useState({});
-  const [option, setOption] = useState({});
 
   const navigate = useNavigate();
 
@@ -50,27 +49,26 @@ const PersonalInfo = () => {
     'HSC Vocational',
     'CBSE',
     'Diploma',
+    'Dropout'
   ];
 
 
   const handleNavigate = () => {
-    if (option.lastStudies === 'Diploma') {
+    if (formData.lastStudies === 'Diploma') {
       navigate("/diplomaInfo");
-    } else {
+    }
+    else {
       navigate("/SSLCInfo");
     }
   }
 
 
-  const handleselction = (e) => {
-    setOption({ ...formData, [e.target.name]: e.target.value })
-  };
-
-
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+
+
 
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
@@ -170,6 +168,10 @@ const PersonalInfo = () => {
                 className="mt-1 w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
               />
             </div>
+            <div>
+            <label className="block text-lg font-medium text-gray-700">Date of Birth</label>
+                              <input type="date" placeholder="Date of Birth" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+</div>
             <div className="grid w-120 ">
               <label className=" block text-lg font-medium text-gray-700">Gender</label>
               <div className="flex space-x-6 border border-gray-200 rounded-xl p-2">
@@ -243,17 +245,17 @@ const PersonalInfo = () => {
               </div>
               <div className="grid ">
                 <div>
-                <span className="text-sm font-medium text-gray-700  ">Are you First Graduate?</span>
+                  <span className="text-sm font-medium text-gray-700  ">Are you First Graduate?</span>
                 </div>
                 <div className="flex space-x-6">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="firstGrad" className="text-blue-600" required />
-                  <span>Yes</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="firstGrad" className="text-blue-600" />
-                  <span>No</span>
-                </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="radio" name="firstGrad" className="text-blue-600" required />
+                    <span>Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="radio" name="firstGrad" className="text-blue-600" />
+                    <span>No</span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -309,7 +311,7 @@ const PersonalInfo = () => {
                   key={index}
                   className={`flex flex-col ${field.full ? "md:col-span-2" : ""}`}
                 >
-                  
+
                   <label className="mb-1 font-medium text-sm text-gray-700 ">
                     {field.label}
                   </label>
@@ -332,25 +334,45 @@ const PersonalInfo = () => {
 
             <h2 className="mb-1 font-medium text-lg text-gray-700">Educational Background</h2>
             <div className="grid md:grid-cols-2 gap-4 mt-5 border border-gray-200 p-5">
-              <input type="text" placeholder="SSLC Mark" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              <div className=" grid " >
+              <div className="grid">
+              <div className="grid">
+                <label className="mb-1 font-medium text-sm text-gray-700 ">SSLC Mark</label>
+                <input type="text" placeholder="SSLC Mark" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+              <div className="grid">
+                <label className="mb-1 font-medium text-sm text-gray-700 ">Name & Place of School</label>
+                <input type="text" placeholder="Name & Place of School" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+              </div>
+
+                  <div className=" grid w-120" >
                 <label className=" font-medium text-sm text-gray-700">Last Studies</label>
                 <select
                   name="lastStudies"
-                  onChange={handleselction}
+                  onChange={handleChange}
+
                   className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option disabled >Select an option</option>
                   {options.map((option, index) => (
-                    <option key={index} value={option}>{option}</option>
+                    <option key={index} value={option} >{option}</option>
                   ))}
                 </select>
               </div>
+              {formData.lastStudies === 'Dropout' && (
+                // Dropout info
+                <div>
 
-              <input type="text" placeholder="Name & Place of School/College" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              <input type="text" placeholder="Reg. No" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              <input type="date" placeholder="Date of Birth" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              <input type="text" placeholder="Medium of Study" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" placeholder="Name & Place of College" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" placeholder="Reg. No" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" placeholder="Medium of Study" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" placeholder="Year of Passing" className=" px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+
+                </div>
+              )}
+
+              
+
               <div className="flex space-x-6 items-center">
                 <span className="text-sm font-medium text-gray-700">
                   Studied 6th–12th in Govt School?
@@ -364,7 +386,6 @@ const PersonalInfo = () => {
                   <span>No</span>
                 </label>
               </div>
-              <input type="text" placeholder="Year of Passing" className=" px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
             </div>
 
 
