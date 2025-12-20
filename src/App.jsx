@@ -19,7 +19,7 @@ function App() {
     <>
     <Routes>
       {/* StudentPanel */}
-      <Route path='/studentInfo' element={<PersonalInfo/>}/>
+      <Route path='/' element={<PersonalInfo/>}/>
       <Route path='/SSLCInfo' element={<AcademicScores/>}/>
       <Route path='/feesInfo' element={<FeesInfo/>}/>
       <Route path='/t&q' element={<TermCondition/>}/>

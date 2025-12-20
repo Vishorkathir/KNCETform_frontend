@@ -16,15 +16,15 @@ const PersonalInfo = () => {
     { id: 1, department: "AD(Artificial and Data Science Engineering)" },
     { id: 2, department: "BME(Bio-Medical Engineering)" },
     { id: 3, department: "CSE(Computer Science and Engineering)" },
-    { id: 4, department: "CIVIL" },
+    { id: 4, department: "CIVIL(Civil Engineering)" },
     { id: 5, department: "ECE(Electronics and Communication Engineering )" },
     { id: 6, department: "EEE(Electrical and Electronics Engineering)" },
     { id: 7, department: "IT(Information Technology)" },
-    { id: 8, department: "Mechanical Engineering" },
+    { id: 8, department: "MECH(Mechanical Engineering)" },
   ]
 
   const Address = [
-    { label: "Address Line 1 (Door no, Village Name / Street Name)",  name: "address1", placeholder: "Enter Door no, Village Name / Street Name", full: true },
+    { label: "Address Line 1 (Door no, Village Name / Street Name)", name: "address1", placeholder: "Enter Door no, Village Name / Street Name", full: true },
     { label: "Address Line 2 (Panchayat / Town)", name: "address2", placeholder: "Enter Panchayat / Town", full: true },
     { label: "Taluk", name: "taluk", placeholder: "Enter Taluk" },
     { label: "District", name: "district", placeholder: "Enter District" },
@@ -34,16 +34,26 @@ const PersonalInfo = () => {
     { label: "Contact No. (Mother)", name: "motherContact", placeholder: "Enter Contact No. (Mother)" },
     { label: "Contact No. (Student)", name: "studentContact", placeholder: "Enter Contact No. (Student)", full: true },
   ];
+  const Community = [
+    { id: 1, community: "OC" },
+    { id: 2, community: "BC" },
+    { id: 3, community: "BCM" },
+    { id: 4, community: "MBC" },
+    { id: 5, community: "SC" },
+    { id: 6, community: "SCA" },
+    { id: 7, community: "SCE" },
+    { id: 8, community: "ST" }
+  ]
 
-   const options = [
+  const options = [
     'HSC Academic',
     'HSC Vocational',
     'CBSE',
     'Diploma',
   ];
 
-  
-  const handleNavigate = () =>{
+
+  const handleNavigate = () => {
     if (option.lastStudies === 'Diploma') {
       navigate("/diplomaInfo");
     } else {
@@ -52,8 +62,8 @@ const PersonalInfo = () => {
   }
 
 
-  const handleselction = (e) =>{
-    setOption({...formData, [e.target.name]:e.target.value})
+  const handleselction = (e) => {
+    setOption({ ...formData, [e.target.name]: e.target.value })
   };
 
 
@@ -89,15 +99,15 @@ const PersonalInfo = () => {
 
           <div className="mb-10 text-center">
 
-          <h1 className=" text-4xl  font-bold text-gray-800">
-            Kongunadu College of Engineering & Technology
-          </h1>
-          <h2 className="text-4xl text-gray-800 font-normal ">Atonomous</h2>
+            <h1 className=" text-4xl  font-bold text-gray-800">
+              Kongunadu College of Engineering & Technology
+            </h1>
+            <h2 className="text-4xl text-gray-800 font-normal ">Atonomous</h2>
 
-          <p className=" text-lg text-gray-700">
-            AICTE-New Delhi, Affiliation: Anna University, Chennai, Accreditations: NAAC & NBA,
-            Address: Namakkal - Trichy Main Road, Thottiapatti (Po), Thottiam Taluk, Trichy Dt. 621 215
-          </p>
+            <p className=" text-lg text-gray-700">
+              AICTE-New Delhi, Affiliation: Anna University, Chennai, Accreditations: NAAC & NBA,
+              Address: Namakkal - Trichy Main Road, Thottiapatti (Po), Thottiam Taluk, Trichy Dt. 621 215
+            </p>
           </div>
 
           {/* Section: Personal Information */}
@@ -113,35 +123,42 @@ const PersonalInfo = () => {
                 <select className=" mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                   {
                     degree.map((dept, index) => (
-                      <option className=""  key={index}>{dept.department}</option>
+                      <option className="" key={index}>{dept.department}</option>
                     ))}
                 </select>
               </div>
 
 
+              <div className="grid ">
+                <label className="block text-lg font-medium text-gray-700">Quota</label>
 
-              <div className="flex items-center space-x-6 text-xl mt-5" >
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="quota" className="text-blue-600" required />
-                  <span>Management Quota</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="quota" className="text-blue-600" />
-                  <span>Government Quota</span>
-                </label>
+                <div className="flex items-center space-x-6 text-xl mt-5 border border-gray-200 rounded-xl p-2" >
+
+                  <label className="flex items-center space-x-2">
+                    <input type="radio" name="quota" className="text-blue-600" required />
+                    <span>Management Quota</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="radio" name="quota" className="text-blue-600" />
+                    <span>Government Quota</span>
+                  </label>
+                </div>
               </div>
             </div>
 
             {/* Admission Type */}
-            <div className="flex space-x-6">
-              <label className="flex items-center space-x-2">
-                <input type="radio" name="entry" className="text-blue-600" />
-                <span>I Year</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input type="radio" name="entry" className="text-blue-600" />
-                <span>Lateral Entry</span>
-              </label>
+            <div className="grid w-120">
+              <label className=" block text-lg font-medium text-gray-700">Admission Type</label>
+              <div className="flex space-x-6 border border-gray-200 rounded-xl p-2">
+                <label className="flex items-center space-x-2">
+                  <input type="radio" name="entry" className="text-blue-600" />
+                  <span>I Year</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="radio" name="entry" className="text-blue-600" />
+                  <span>Lateral Entry</span>
+                </label>
+              </div>
             </div>
 
             {/* Name & Gender */}
@@ -153,61 +170,91 @@ const PersonalInfo = () => {
                 className="mt-1 w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
               />
             </div>
-            <div className="flex space-x-6">
-              <label className="flex items-center space-x-2" >
-                <input type="radio" name="gender" className="text-blue-600" required  />
-                <span>Male</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input type="radio" name="gender" className="text-blue-600" />
-                <span>Female</span>
-              </label>
+            <div className="grid w-120 ">
+              <label className=" block text-lg font-medium text-gray-700">Gender</label>
+              <div className="flex space-x-6 border border-gray-200 rounded-xl p-2">
+                <label className="flex items-center space-x-2" >
+                  <input type="radio" name="gender" className="text-blue-600" required />
+                  <span>Male</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="radio" name="gender" className="text-blue-600" />
+                  <span>Female</span>
+                </label>
+              </div>
             </div>
 
             {/* Parents Info */}
             <div className="grid md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Father/Guardian's Name"
-                className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Father/Guardian's Occupation"
-                className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              />
+              <div className="grid">
+                <label className="block text-lg font-medium text-gray-700">Father/Guardian's Name</label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+
+              <div className="grid">
+                <label className="block text-lg font-medium text-gray-700">Father/Guardian's Occupation</label>
+                <input
+                  type="text"
+                  placeholder=" Occupation"
+                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
             </div>
 
             {/* Community & Caste */}
             <div className="grid md:grid-cols-2 gap-4">
-              <select className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                <option>Select Community</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Enter Caste"
-                className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
-              />
+              <div className="grid">
+                <label className=" text-lg font-medium text-gray-700">Community</label>
+                <select className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                  {
+                    Community.map((community, index) => (
+                      <option key={index}>{community.community}</option>
+                    ))
+                  }
+
+                </select>
+              </div>
+              <div className="grid">
+                <label className=" text-lg font-medium text-gray-700">Caste</label>
+                <input
+                  type="text"
+                  placeholder="Enter Caste"
+                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
+                />
+              </div>
             </div>
 
             {/* Family Income & First Graduate */}
             <div className="grid md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Enter Family Income"
-                className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              />
-              <div className="flex space-x-6 ">
-                <span className="text-sm font-medium text-gray-700 py-4 ">Are you First Graduate?</span>
+              <div className="grid">
+                <label className="block text-lg font-medium text-gray-700">Family Income</label>
+                <input
+                  type="text"
+                  placeholder="Enter Family Income"
+                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div className="grid ">
+                <div>
+                <span className="text-sm font-medium text-gray-700  ">Are you First Graduate?</span>
+                </div>
+                <div className="flex space-x-6">
                 <label className="flex items-center space-x-2">
                   <input type="radio" name="firstGrad" className="text-blue-600" required />
                   <span>Yes</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="radio" name="firstGrad" className="text-blue-600"  />
+                  <input type="radio" name="firstGrad" className="text-blue-600" />
                   <span>No</span>
                 </label>
+                </div>
               </div>
             </div>
 
@@ -222,7 +269,7 @@ const PersonalInfo = () => {
                   <img
                     src={photo}
                     alt="Uploaded Preview"
-                    className="mx-auto h-40 w-40 object-cover rounded-md" 
+                    className="mx-auto h-40 w-40 object-cover rounded-md"
                   />
                 ) : (
                   <p className="text-gray-500 text-sm mb-2">
@@ -253,7 +300,7 @@ const PersonalInfo = () => {
 
             {/* Communication Address */}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
               <div>
                 <h1 className="mb-1 font-medium text-lg text-gray-700" >Communication Address</h1>
               </div>
@@ -262,6 +309,7 @@ const PersonalInfo = () => {
                   key={index}
                   className={`flex flex-col ${field.full ? "md:col-span-2" : ""}`}
                 >
+                  
                   <label className="mb-1 font-medium text-sm text-gray-700 ">
                     {field.label}
                   </label>
@@ -283,22 +331,22 @@ const PersonalInfo = () => {
             {/* Educational Background */}
 
             <h2 className="mb-1 font-medium text-lg text-gray-700">Educational Background</h2>
-            <div className="grid md:grid-cols-2 gap-4 mt-5">
+            <div className="grid md:grid-cols-2 gap-4 mt-5 border border-gray-200 p-5">
               <input type="text" placeholder="SSLC Mark" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              <div className=" grid mt-[-5%]" >
-                <label className="mb-1 font-medium text-sm text-gray-700">Last Studies</label>
+              <div className=" grid " >
+                <label className=" font-medium text-sm text-gray-700">Last Studies</label>
                 <select
                   name="lastStudies"
                   onChange={handleselction}
                   className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option disabled >Select an option</option>
-                  {options.map((option,index) => (
+                  {options.map((option, index) => (
                     <option key={index} value={option}>{option}</option>
                   ))}
                 </select>
               </div>
-              
+
               <input type="text" placeholder="Name & Place of School/College" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               <input type="text" placeholder="Reg. No" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               <input type="date" placeholder="Date of Birth" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
@@ -330,7 +378,7 @@ const PersonalInfo = () => {
               >
                 Save and Continue
               </button>
-              
+
             </div>
           </form>
         </div>
