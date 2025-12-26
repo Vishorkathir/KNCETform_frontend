@@ -14,7 +14,6 @@ const AcademicScores = () => {
     { subject: "Computer Science / Biology", max: 100, obtained: "" },
   ]);
 
-  // Upload files state
   const [uploads, setUploads] = useState([]);
 
   const handleScoreChange = (index, value) => {
@@ -24,7 +23,7 @@ const AcademicScores = () => {
   };
 
   const handleNavigate = () => {
-    navigate("/t&q");
+    navigate("/success");
   }
 
   const handleUploadChange = (e) => {
@@ -40,20 +39,36 @@ const AcademicScores = () => {
   const percentage =
     totalMarks > 0 ? ((totalMarks / (scores.length * 100)) * 100).toFixed(2) : "";
 
-  
+  // --- ADDED CUTOFF LOGIC START ---
+  const calculateCutoff = () => {
+    const getMark = (subName) => {
+      const found = scores.find(s => s.subject === subName);
+      return parseFloat(found?.obtained) || 0;
+    };
+
+    const math = getMark("Mathematics");
+    const physics = getMark("Physics");
+    const chemistry = getMark("Chemistry");
+
+    // Engineering Cutoff Formula: Math + (Physics/2) + (Chemistry/2)
+    const cutoffValue = math + (physics / 2) + (chemistry / 2);
+    return cutoffValue > 0 ? cutoffValue.toFixed(2) : "0.00";
+  };
+
+  const cutoff = calculateCutoff();
+  // --- ADDED CUTOFF LOGIC END ---
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
     <>
-
       {/* top */}
       <div className="py-1 ml-10 flex flex-row font-bold ">
-        <img src={logo} className="w-10  " />
+        <img src={logo} className="w-10  " alt="Logo" />
         <h1 className="py-5  px-3 text-2xl mt-3 ">
           Kongunadu college of Engineering and Technology
         </h1>
-
       </div>
-
 
       <div className="min-h-screen bg-gray-50 flex flex-col items-center py-8 px-4">
         <div className="max-w-4xl w-full bg-white shadow p-6 rounded-md">
@@ -61,22 +76,17 @@ const AcademicScores = () => {
           <h2 className=" text-4xl font-semibold text-gray-800">
             HSC State Board Scores
           </h2>
-          {/* <p className="text-lg text-gray-700">
-          Enter your HSC/SSLC scores to complete your application.
-        </p> */}
 
-          {/* <input type="text" placeholder="medium of study"/> */}
           <div className="flex flex-row mt-5">
             <div className="grid">
               <label className="font-semibold text-gray-600">Medium of Study</label>
               <select className="  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 " required>
-                <option value="">Tamil</option>
-                <option value="">English</option>
-
+                <option value="Tamil">Tamil</option>
+                <option value="English">English</option>
               </select>
             </div>
             <div className=" grid ml-6 gap-3">
-              <lable>Year of Passing</lable>
+              <label>Year of Passing</label>
               <input type="text" placeholder="Year of Passing" className="input  px-3 py-2 mt-1 w-60 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
           </div>
@@ -103,7 +113,6 @@ const AcademicScores = () => {
                         onChange={(e) => handleScoreChange(idx, e.target.value)}
                         placeholder="Enter marks"
                         className="w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 p-3 "
-
                       />
                     </td>
                   </tr>
@@ -142,9 +151,9 @@ const AcademicScores = () => {
               </label>
               <input
                 type="text"
-                value={cutoff}
+                value={cutoff} // Corrected: Now displays calculated value
                 readOnly
-                className="mt-1 w-full border-gray-300 rounded-md bg-gray-100 p-3"
+                className="mt-1 w-full border-gray-300 rounded-md bg-gray-100 p-3 font-bold text-blue-600"
               />
             </div>
           </div>
@@ -156,7 +165,7 @@ const AcademicScores = () => {
           <div className="mt-4 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
             <p className="text-gray-500 text-sm mb-2">Drag and drop or browse</p>
             <p className="text-xs text-gray-400 mb-4">
-              Upload your HSC/SSLC mark sheets and certificates here.
+              Upload your HSC mark sheets and certificates here.
             </p>
             <input
               type="file"
@@ -164,7 +173,6 @@ const AcademicScores = () => {
               onChange={handleUploadChange}
               className="hidden "
               id="file-upload"
-
             />
             <label
               htmlFor="file-upload"
@@ -173,7 +181,6 @@ const AcademicScores = () => {
               Browse Files
             </label>
 
-            {/* Show uploaded file names */}
             {uploads.length > 0 && (
               <ul className="mt-2 text-sm text-gray-600">
                 {uploads.map((file, i) => (
@@ -184,11 +191,23 @@ const AcademicScores = () => {
           </div>
 
           {/* Submit */}
-          <div className="mt-6 text-right">
+          <div className="mt-6 flex justify-end items-center gap-4">
+            <label className="flex items-center space-x-2 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <span>I accept the Terms and Conditions</span>
+            </label>
+
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className={`px-6 py-2 text-white rounded-md transition duration-200 ${termsAccepted ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+                }`}
               onClick={handleNavigate}
+              disabled={!termsAccepted}
             >
               Submit
             </button>

@@ -56,8 +56,9 @@ const PersonalInfo = () => {
   const handleNavigate = () => {
     if (formData.lastStudies === 'Diploma') {
       navigate("/diplomaInfo");
-    }
-    else {
+    } else if (formData.lastStudies === 'CBSE') {
+      navigate("/CBSEInfo");
+    } else {
       navigate("/SSLCInfo");
     }
   }
@@ -67,7 +68,16 @@ const PersonalInfo = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
+  // const handleGenderChange = (e) => {
+  //   setFormData({ ...formData, gender: e.target.value });
+  // };
+  // const handleHostelChange = (e) => {
+  //   setFormData({ ...formData, BoysHostel: e.target.value });
+  // }
+  const handleGenderChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
 
   const handlePhotoUpload = (event) => {
@@ -79,335 +89,347 @@ const PersonalInfo = () => {
 
 
   return (
-    <>
-      {/* top */}
-      <div className="py-1 ml-10 flex flex-row font-bold ">
-        <img src={logo} className="w-10  " />
-        <h1 className="py-5  px-3 text-2xl mt-3 ">
-          Kongunadu college of Engineering and Technology
-        </h1>
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+      {/* Top Navigation / Logo Bar */}
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center space-x-4">
+          <img src={logo} alt="KNCET Logo" className="h-12 w-auto" />
+          <h1 className="text-xl font-bold text-gray-800 tracking-tight">
+            Kongunadu College of Engineering and Technology
+          </h1>
+        </div>
+      </nav>
 
-      </div>
-
-
-      <div className=" flex flex-col item-center    ">
-        {/* Header */}
-        <div className="max-w-8xl w-full  px-40 py-20">
-
-
-          <div className="mb-10 text-center">
-
-            <h1 className=" text-4xl  font-bold text-gray-800">
-              Kongunadu College of Engineering & Technology
-            </h1>
-            <h2 className="text-4xl text-gray-800 font-normal ">Atonomous</h2>
-
-            <p className=" text-lg text-gray-700">
-              AICTE-New Delhi, Affiliation: Anna University, Chennai, Accreditations: NAAC & NBA,
-              Address: Namakkal - Trichy Main Road, Thottiapatti (Po), Thottiam Taluk, Trichy Dt. 621 215
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* College Branding Header */}
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl font-extrabold text-blue-900 mb-2">
+            Kongunadu College of Engineering & Technology
+          </h1>
+          <h2 className="text-2xl font-semibold text-gray-600 mb-4 tracking-wide uppercase">Autonomous</h2>
+          <div className="max-w-3xl mx-auto border-t border-gray-200 pt-4">
+            <p className="text-gray-600 leading-relaxed">
+              AICTE-New Delhi, Affiliation: Anna University, Chennai, Accreditations: NAAC & NBA<br />
+              <span className="text-sm">Namakkal - Trichy Main Road, Thottiapatti (Po), Thottiam Taluk, Trichy Dt. 621 215</span>
             </p>
           </div>
+        </header>
 
-          {/* Section: Personal Information */}
-          <h2 className=" text-3xl font-semibold text-gray-800">
-            Personal Information
-          </h2>
+        {/* Form Section */}
+        <section className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+          <div className="bg-blue-600 px-8 py-5">
+            <h2 className="text-2xl font-bold text-white flex items-center">
+          
+              Personal Information
+            </h2>
+          </div>
 
-          <form className="mt-4  space-y-6">
-            {/* Degree & Quota */}
-            <div className="grid md:grid-cols-2 gap-10">
-              <div>
-                <label className="block text-lg font-medium text-gray-700">Degree</label>
-                <select className=" mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                  {
-                    degree.map((dept, index) => (
-                      <option className="" key={index}>{dept.department}</option>
+          <form className="p-8 space-y-10" onSubmit={(e) => e.preventDefault()}>
+            {/* Top Grid: Degree, Quota, Photo */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Degree / Department</label>
+                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
+                    <option value="" disabled selected>Select Department</option>
+                    {degree.map((dept, index) => (
+                      <option key={index} value={dept.department}>{dept.department}</option>
                     ))}
-                </select>
-              </div>
-
-
-              <div className="grid ">
-                <label className="block text-lg font-medium text-gray-700">Quota</label>
-
-                <div className="flex items-center space-x-6 text-xl mt-5 border border-gray-200 rounded-xl p-2" >
-
-                  <label className="flex items-center space-x-2">
-                    <input type="radio" name="quota" className="text-blue-600" required />
-                    <span>Management Quota</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input type="radio" name="quota" className="text-blue-600" />
-                    <span>Government Quota</span>
-                  </label>
+                  </select>
                 </div>
-              </div>
-            </div>
 
-            {/* Admission Type */}
-            <div className="grid w-120">
-              <label className=" block text-lg font-medium text-gray-700">Admission Type</label>
-              <div className="flex space-x-6 border border-gray-200 rounded-xl p-2">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="entry" className="text-blue-600" />
-                  <span>I Year</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="entry" className="text-blue-600" />
-                  <span>Lateral Entry</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Name & Gender */}
-            <div>
-              <label className="block text-lg font-medium text-gray-700">Name</label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className="mt-1 w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
-              />
-            </div>
-            <div>
-            <label className="block text-lg font-medium text-gray-700">Date of Birth</label>
-                              <input type="date" placeholder="Date of Birth" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-</div>
-            <div className="grid w-120 ">
-              <label className=" block text-lg font-medium text-gray-700">Gender</label>
-              <div className="flex space-x-6 border border-gray-200 rounded-xl p-2">
-                <label className="flex items-center space-x-2" >
-                  <input type="radio" name="gender" className="text-blue-600" required />
-                  <span>Male</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="gender" className="text-blue-600" />
-                  <span>Female</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Parents Info */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="grid">
-                <label className="block text-lg font-medium text-gray-700">Father/Guardian's Name</label>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
-
-
-              <div className="grid">
-                <label className="block text-lg font-medium text-gray-700">Father/Guardian's Occupation</label>
-                <input
-                  type="text"
-                  placeholder=" Occupation"
-                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Community & Caste */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="grid">
-                <label className=" text-lg font-medium text-gray-700">Community</label>
-                <select className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                  {
-                    Community.map((community, index) => (
-                      <option key={index}>{community.community}</option>
-                    ))
-                  }
-
-                </select>
-              </div>
-              <div className="grid">
-                <label className=" text-lg font-medium text-gray-700">Caste</label>
-                <input
-                  type="text"
-                  placeholder="Enter Caste"
-                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required
-                />
-              </div>
-            </div>
-
-            {/* Family Income & First Graduate */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="grid">
-                <label className="block text-lg font-medium text-gray-700">Family Income</label>
-                <input
-                  type="text"
-                  placeholder="Enter Family Income"
-                  className="w-120 p-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div className="grid ">
                 <div>
-                  <span className="text-sm font-medium text-gray-700  ">Are you First Graduate?</span>
-                </div>
-                <div className="flex space-x-6">
-                  <label className="flex items-center space-x-2">
-                    <input type="radio" name="firstGrad" className="text-blue-600" required />
-                    <span>Yes</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input type="radio" name="firstGrad" className="text-blue-600" />
-                    <span>No</span>
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Quota Selection</label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <label className="flex items-center justify-center border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-blue-50 transition-colors has-[:checked]:bg-blue-600 has-[:checked]:text-white has-[:checked]:border-blue-600">
+                      <input type="radio" name="quota" className="hidden" required />
+                      <span className="font-medium">Management</span>
+                    </label>
+                    <label className="flex items-center justify-center border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-blue-50 transition-colors has-[:checked]:bg-blue-600 has-[:checked]:text-white has-[:checked]:border-blue-600">
+                      <input type="radio" name="quota" className="hidden" />
+                      <span className="font-medium">Government</span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Passport Photo */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Passport Photo
-              </label>
-
-              <div className="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                {photo ? (
-                  <img
-                    src={photo}
-                    alt="Uploaded Preview"
-                    className="mx-auto h-40 w-40 object-cover rounded-md"
-                  />
-                ) : (
-                  <p className="text-gray-500 text-sm mb-2">
-                    Click below to upload your passport-size photo
-                  </p>
-                )}
-
-                {/* Hidden file input */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="photoUpload"
-                  onChange={handlePhotoUpload}
-                  className="hidden"
-                  required
-                />
-
-                {/* Custom button for upload */}
-                <label
-                  htmlFor="photoUpload"
-                  className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 inline-block mt-2"
-                >
-                  {photo ? "Change Photo ?" : "Upload Photo"}
-                </label>
-              </div>
-            </div>
-
-
-            {/* Communication Address */}
-
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
               <div>
-                <h1 className="mb-1 font-medium text-lg text-gray-700" >Communication Address</h1>
-              </div>
-              {Address.map((field, index) => (
-                <div
-                  key={index}
-                  className={`flex flex-col ${field.full ? "md:col-span-2" : ""}`}
-                >
-
-                  <label className="mb-1 font-medium text-sm text-gray-700 ">
-                    {field.label}
-                  </label>
-                  <input
-                    type="text"
-                    name={field.name}
-                    placeholder={field.placeholder}
-                    value={formData[field.name] || ""}
-                    onChange={handleChange}
-                    className="  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Passport Photo</label>
+                <div className="relative group border-2 border-dashed border-gray-300 rounded-2xl p-4 bg-gray-50 hover:bg-white hover:border-blue-400 transition-all text-center">
+                  {photo ? (
+                    <div className="relative inline-block">
+                      <img src={photo} alt="Preview" className="h-44 w-44 object-cover rounded-xl shadow-md border-2 border-white" />
+                      <label htmlFor="photoUpload" className="absolute -bottom-2 -right-2 p-2 bg-blue-600 text-white rounded-full shadow-lg cursor-pointer hover:bg-blue-700">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                      </label>
+                    </div>
+                  ) : (
+                    <label htmlFor="photoUpload" className="cursor-pointer flex flex-col items-center justify-center py-6">
+                      <div className="bg-blue-100 p-4 rounded-full mb-3 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                      </div>
+                      <span className="text-sm font-medium text-gray-600">Upload Photo</span>
+                      <span className="text-xs text-gray-400 mt-1">JPEG/PNG, Max 2MB</span>
+                    </label>
+                  )}
+                  <input type="file" accept="image/*" id="photoUpload" onChange={handlePhotoUpload} className="hidden" />
                 </div>
-              ))}
+              </div>
             </div>
 
+            <hr className="border-gray-100" />
 
-
-            {/* Educational Background */}
-
-            <h2 className="mb-1 font-medium text-lg text-gray-700">Educational Background</h2>
-            <div className="grid md:grid-cols-2 gap-4 mt-5 border border-gray-200 p-5">
-              <div className="grid">
-              <div className="grid">
-                <label className="mb-1 font-medium text-sm text-gray-700 ">SSLC Mark</label>
-                <input type="text" placeholder="SSLC Mark" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+            {/* Middle Grid: Admission, Name, Email, DOB */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+              <div className="col-span-full">
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Admission Type</label>
+                <div className="flex space-x-4 max-w-md">
+                  <label className="flex-1 flex items-center justify-center border border-gray-200 rounded-xl p-3 cursor-pointer hover:bg-blue-50 transition-colors has-[:checked]:bg-blue-600 has-[:checked]:text-white has-[:checked]:border-blue-600">
+                    <input type="radio" name="entry" className="hidden" />
+                    <span className="font-medium">I Year</span>
+                  </label>
+                  <label className="flex-1 flex items-center justify-center border border-gray-200 rounded-xl p-3 cursor-pointer hover:bg-blue-50 transition-colors has-[:checked]:bg-blue-600 has-[:checked]:text-white has-[:checked]:border-blue-600">
+                    <input type="radio" name="entry" className="hidden" />
+                    <span className="font-medium">Lateral Entry</span>
+                  </label>
+                </div>
               </div>
-              <div className="grid">
-                <label className="mb-1 font-medium text-sm text-gray-700 ">Name & Place of School</label>
-                <input type="text" placeholder="Name & Place of School" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Full Name</label>
+                <input type="text" placeholder="Student's official name" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
               </div>
 
-                  <div className=" grid w-120" >
-                <label className=" font-medium text-sm text-gray-700">Last Studies</label>
-                <select
-                  name="lastStudies"
-                  onChange={handleChange}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" placeholder="example@gmail.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+              </div>
 
-                  className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option disabled >Select an option</option>
-                  {options.map((option, index) => (
-                    <option key={index} value={option} >{option}</option>
-                  ))}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Date of Birth</label>
+                <input type="date" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Gender / Accomodation</label>
+                <div className="bg-gray-50 p-4 border border-gray-200 rounded-xl space-y-4">
+                  <div className="flex space-x-6">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input type="radio" name="gender" value="Male" onChange={handleGenderChange} className="w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                      <span className="font-medium">Male</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input type="radio" name="gender" value="Female" onChange={handleGenderChange} className="w-5 h-5 text-pink-600 focus:ring-pink-500" />
+                      <span className="font-medium">Female</span>
+                    </label>
+                  </div>
+
+                  {formData.gender && (
+                    <div className="pt-4 border-t border-gray-200 space-y-3">
+                      <label className="block text-xs font-bold text-gray-400 uppercase">Residence Preference</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <label className="flex items-center space-x-2 p-2 rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                          <input type="radio" name="accommodation" value={formData.gender === "Male" ? "BoysHostel" : "GirlsHostel"} onChange={handleGenderChange} />
+                          <span className="text-sm">Hostel</span>
+                        </label>
+                        <label className="flex items-center space-x-2 p-2 rounded-lg border border-gray-200 hover:border-blue-400 cursor-pointer">
+                          <input type="radio" name="accommodation" value="DayScholar" onChange={handleGenderChange} />
+                          <span className="text-sm">Day Scholar</span>
+                        </label>
+                      </div>
+
+                      {/* Room / Travel Details Sub-options */}
+                      {(formData.accommodation === "BoysHostel" || formData.accommodation === "GirlsHostel") && (
+                        <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-100 space-y-2">
+                          <select name="roomType" onChange={handleGenderChange} className="w-full text-sm bg-transparent border-none outline-none focus:ring-0">
+                            <option value="">Select Room Type</option>
+                            <option value="Normal4">Normal (4 Members)</option>
+                            <option value="Attach3">Attached Bath (3 Members)</option>
+                            <option value="AC2">AC + Attached (2 Members)</option>
+                          </select>
+                        </div>
+                      )}
+
+                      {formData.accommodation === "DayScholar" && (
+                        <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-100 space-y-2">
+                          <select name="travelType" onChange={handleGenderChange} className="w-full text-sm bg-transparent border-none outline-none focus:ring-0">
+                            <option value="">Select Travel Type</option>
+                            <option value="CollegeBus">College Bus</option>
+                            <option value="OutBus">Own/Outside Travel</option>
+                          </select>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <hr className="border-gray-100" />
+
+            {/* Parents & Community Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Father / Guardian Name</label>
+                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Father's Occupation</label>
+                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Community</label>
+                <select className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required>
+                  <option value="" disabled selected>Select Community</option>
+                  {Community.map((c, i) => <option key={i}>{c.community}</option>)}
                 </select>
               </div>
-              {formData.lastStudies === 'Dropout' && (
-                // Dropout info
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Caste</label>
+                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Annual Family Income</label>
+                <input type="number" placeholder="₹" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" />
+              </div>
+
+              <div className="bg-blue-50 p-4 border border-blue-100 rounded-xl flex items-center justify-between">
                 <div>
-
-                  <input type="text" placeholder="Name & Place of College" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-                  <input type="text" placeholder="Reg. No" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-                  <input type="text" placeholder="Medium of Study" className="input  px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-                  <input type="text" placeholder="Year of Passing" className=" px-3 py-2 mt-1 w-120 p-3 border-gray-200 text-lg text-gray-800 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
-
+                  <span className="block text-sm font-bold text-blue-900 uppercase">First Graduate?</span>
+                  <span className="text-xs text-blue-700/70 capitalize">Are you the first in family to graduate?</span>
                 </div>
-              )}
-
-              
-
-              <div className="flex space-x-6 items-center">
-                <span className="text-sm font-medium text-gray-700">
-                  Studied 6th–12th in Govt School?
-                </span>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="govtSchool" className="text-blue-600" />
-                  <span>Yes</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="govtSchool" className="text-blue-600" />
-                  <span>No</span>
-                </label>
+                <div className="flex space-x-3">
+                  <label className="flex items-center space-x-1 cursor-pointer">
+                    <input type="radio" name="firstGrad" className="w-5 h-5 text-blue-600" required />
+                    <span className="text-sm font-semibold text-blue-900">Yes</span>
+                  </label>
+                  <label className="flex items-center space-x-1 cursor-pointer">
+                    <input type="radio" name="firstGrad" className="w-5 h-5 text-blue-600" />
+                    <span className="text-sm font-semibold text-blue-900">No</span>
+                  </label>
+                </div>
               </div>
             </div>
 
+            <hr className="border-gray-100" />
 
+            {/* Address Grid */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-bold text-gray-800 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Communication Address
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Address.map((field, index) => (
+                  <div key={index} className={`${field.full ? "md:col-span-2 lg:col-span-3" : ""}`}>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{field.label}</label>
+                    <input
+                      type="text"
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      value={formData[field.name] || ""}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none text-sm"
+                      required
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
-            {/* Submit */}
-            <div className="text-right">
+            <hr className="border-gray-100" />
+
+            {/* Education Grid */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-bold text-gray-800 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                Educational Background
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">SSLC Marks (%)</label>
+                    <input type="text" placeholder="e.g. 92.4" className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">School Name & Location</label>
+                    <input type="text" placeholder="Government High School, Thottiam" className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
+                  </div>
+                  <div className="flex items-center space-x-6 pt-2">
+                    <span className="text-sm font-bold text-gray-700">Govt School (6th-12th)?</span>
+                    <div className="flex space-x-3">
+                      <label className="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="radio" name="govtSchool" className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm font-medium">Yes</span>
+                      </label>
+                      <label className="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="radio" name="govtSchool" className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm font-medium">No</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">Last Qualification</label>
+                    <select name="lastStudies" onChange={handleChange} className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
+                      <option disabled selected>Choose your previous course</option>
+                      {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+
+                  {formData.lastStudies === 'Dropout' && (
+                    <div className="p-5 bg-orange-50 rounded-xl border border-orange-100 space-y-4 animate-in fade-in slide-in-from-top-2">
+                      <h4 className="text-xs font-bold text-orange-800 uppercase">College Dropout Details</h4>
+                      <div>
+                        <label className="block text-[10px] text-orange-600 font-bold uppercase mb-1">Previous College & Place</label>
+                        <input type="text" className="w-full px-3 py-2 bg-white border border-orange-200 rounded-lg text-sm focus:ring-orange-500" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[10px] text-orange-600 font-bold uppercase mb-1">Reg No</label>
+                          <input type="text" className="w-full px-3 py-2 bg-white border border-orange-200 rounded-lg text-sm focus:ring-orange-500" />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] text-orange-600 font-bold uppercase mb-1">Year of Study</label>
+                          <input type="text" className="w-full px-3 py-2 bg-white border border-orange-200 rounded-lg text-sm focus:ring-orange-500" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Action */}
+            <div className="pt-8 flex justify-end">
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                 onClick={handleNavigate}
+                className="px-10 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:translate-y-[-2px] transition-all active:translate-y-0"
               >
                 Save and Continue
+                <span className="ml-2">→</span>
               </button>
-
             </div>
           </form>
-        </div>
-      </div>
-    </>
+        </section>
 
+        {/* Footer Area */}
+        <footer className="mt-12 text-center text-gray-400 text-sm">
+          &copy; 2024 Kongunadu College of Engineering and Technology. All Rights Reserved.
+        </footer>
+      </main>
+    </div>
   );
 };
 
-
 export default PersonalInfo;
+
