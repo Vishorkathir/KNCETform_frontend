@@ -13,12 +13,13 @@ const PersonalInfo = () => {
 
   const degree = [
     { id: 1, department: "AD(Artificial and Data Science Engineering)" },
-    { id: 2, department: "BME(Bio-Medical Engineering)" },
-    { id: 3, department: "CSE(Computer Science and Engineering)" },
-    { id: 4, department: "CIVIL(Civil Engineering)" },
-    { id: 5, department: "ECE(Electronics and Communication Engineering )" },
-    { id: 6, department: "EEE(Electrical and Electronics Engineering)" },
-    { id: 7, department: "IT(Information Technology)" },
+    { id: 2, department: "AGRI(Agricultural Engineering)" },
+    { id: 3, department: "BME(Bio-Medical Engineering)" },
+    { id: 4, department: "CSE(Computer Science and Engineering)" },
+    { id: 5, department: "CIVIL(Civil Engineering)" },
+    { id: 6, department: "ECE(Electronics and Communication Engineering )" },
+    { id: 7, department: "EEE(Electrical and Electronics Engineering)" },
+    { id: 8, department: "IT(Information Technology)" },
     { id: 8, department: "MECH(Mechanical Engineering)" },
   ]
 
@@ -65,7 +66,14 @@ const PersonalInfo = () => {
 
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'preference1') {
+      setFormData({ ...formData, [name]: value, preference2: '', preference3: '' });
+    } else if (name === 'preference2') {
+      setFormData({ ...formData, [name]: value, preference3: '' });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   // const handleGenderChange = (e) => {
@@ -129,13 +137,27 @@ const PersonalInfo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Degree / Department</label>
-                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
-                    <option value="" disabled selected>Select Department</option>
-                    {degree.map((dept, index) => (
-                      <option key={index} value={dept.department}>{dept.department}</option>
-                    ))}
-                  </select>
+                  <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Degree / Department Preferences</label>
+                  <div className="space-y-3">
+                    <select name="preference1" value={formData.preference1 || ""} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
+                      <option value="" disabled>1st Preference</option>
+                      {degree.map((dept, index) => (
+                        <option key={index} value={dept.department}>{dept.department}</option>
+                      ))}
+                    </select>
+                    <select name="preference2" value={formData.preference2 || ""} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
+                      <option value="" disabled>2nd Preference</option>
+                      {degree.map((dept, index) => (
+                        <option key={index} value={dept.department} disabled={dept.department === formData.preference1}>{dept.department}</option>
+                      ))}
+                    </select>
+                    <select name="preference3" value={formData.preference3 || ""} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
+                      <option value="" disabled>3rd Preference</option>
+                      {degree.map((dept, index) => (
+                        <option key={index} value={dept.department} disabled={dept.department === formData.preference1 || dept.department === formData.preference2}>{dept.department}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div>
@@ -204,7 +226,7 @@ const PersonalInfo = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" placeholder="example@gmail.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
+                <input type="email" placeholder="Email" className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none" required />
               </div>
 
               <div>
@@ -355,7 +377,7 @@ const PersonalInfo = () => {
                 <div className="space-y-6">
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">SSLC Marks (%)</label>
-                    <input type="text" placeholder="e.g. 92.4" className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
+                    <input type="text" placeholder="Eg. 90" className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">School Name & Location</label>
@@ -423,9 +445,9 @@ const PersonalInfo = () => {
         </section>
 
         {/* Footer Area */}
-        <footer className="mt-12 text-center text-gray-400 text-sm">
+        {/* <footer className="mt-12 text-center text-gray-400 text-sm">
           &copy; 2024 Kongunadu College of Engineering and Technology. All Rights Reserved.
-        </footer>
+        </footer> */}
       </main>
     </div>
   );
